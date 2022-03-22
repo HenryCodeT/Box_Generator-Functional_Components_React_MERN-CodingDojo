@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import BoxDisplay from './components/BoxDisplay';
+import ColorForm from './components/ColorForm';
+
 
 function App() {
+  
+  // //// FIELDS ///////////////////////////
+  const [boxs, setBoxs] = useState([]);
+  
+  const setNewBox = (newBox) =>{
+    setBoxs((prevBoxs)=>[...prevBoxs,newBox])
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ColorForm newBox={setNewBox}/>   
+      {
+        boxs.map((box,index) => {
+          return(
+            <BoxDisplay key={index} boxColor = {box.backgroundColor} boxWidth={box.width} boxHeight={box.height}/>
+          );
+        })
+      } 
     </div>
   );
 }
